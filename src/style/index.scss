@@ -1,6 +1,10 @@
 @import "bootswatch/dist/cyborg/bootstrap.min.css";
 
-.cardGame{
-  display: grid; 
+.results-container {
+  justify-content: center;
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  margin: 2rem;
 }
+

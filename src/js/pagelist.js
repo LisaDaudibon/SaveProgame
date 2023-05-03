@@ -1,53 +1,70 @@
 
-export const PageList = (argument = '') => {
+
+export const PageList = (argument = "", searchType = "search") => {
   const preparePage = () => {
-    const cleanedArgument = argument.trim().replace(/\s+/g, '-');
+    const cleanedArgument = argument.trim().replace(/\s+/g, "-");
 
     const displayResults = (articles) => {
-      const resultsContent = articles.map((article) => (
-        `<article class="cardGame">
-          <div class="container-fluid py-2">
-            <div class="card card-bis ">
-              <div class="card-body">
-              <p class=text-center>${article.name}</p>
-              <p>Date de sortie : ${article.released}</p>
-              <p>Plateformes : ${article.platforms}</p>
-              <a href="#pagedetail/${article.id}" class="btn btn-info text-center">Plus de détails</a>
-              </div>
-          </div>
-          </div>
-        </article>`
-      ));
+      const resultsContent = articles.map(
+        (article) =>
+          `<div class="container-fluid">
+          <div class="card h-100 p-3">
+            <img src="${article.background_image}" class="card-img-top" alt="${
+            article.name}" style="max-height: 300px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">${article.name}</h5>
+              <p class="card-text">${article.platforms
+                .map((platform) => {
+                  switch (platform.platform.name) {
+                    case "Linux":
+                      return 'Linux';
+                    case "Mobile":
+                      return 'Mobile';
+                    case "PlayStation 4":
+                      return 'PlayStation 4';
+                    case "Nintendo Switch":
+                      return 'Nintendo Switch';
+                    case "Windows":
+                      return 'Windows';
+                    case "Xbox 360":
+                      return 'Xbox';
+                  }
+                })
+                .join(" ")}</p>
+              <a href="#pagedetail/${article.id}" class="btn btn-primary">Détails</a>
+            </div>
+            </div>
+        </div>`
+      );
 
-      const platformsHTML = platforms.map(gamePlatform =>
-        `<span class="platform">${gamePlatform.platform.name}</span>`)
-        .join(", ");
-        displayResults.querySelector("p.platforms span").innerHTML = platformsHTML;
-
-      const resultsContainer = document.querySelector('.page-list .articles');
-      resultsContainer.innerHTML = resultsContent.join("\n");
-    };
-
-    const fetchList = (url, argument) => {
-      const finalURL = argument ? `${url}&search=${argument}` : url;
-      fetch(finalURL)
-        .then((response) => response.json())
-        .then((responseData) => {
-          displayResults(responseData.results)
-        });
+      const resultsContainer = document.querySelector(".page-list .articles");
+      resultsContainer.innerHTML = `
+        <div class="results-container">
+          ${resultsContent.join("\n")}
+        </div>`;
     };
 
     const API_KEY = "1fb43d4e40d4404c9ae1168602d9da7b"
 
-    fetchList(`https://api.rawg.io/api/games?key=${API_KEY}`, cleanedArgument);
+    const fetchList = (url, argument, searchType) => {
+      const finalURL = argument ? `${url}&${searchType}=${argument}` : url;
+      fetch(finalURL)
+        .then((response) => response.json())
+        .then((responseData) => {
+          displayResults(responseData.results);
+        });
+    };
+
+    const baseUrl = `https://api.rawg.io/api/games?key=${API_KEY}`;
+    fetchList(baseUrl, cleanedArgument, searchType);
   };
 
   const render = () => {
     pageContent.innerHTML = `
-      <section class="page-list">
-        <div class="articles">Hey, this page is a PageList template, about : ${argument}</div>
-      </section>
-    `;
+        <section class="page-list">
+          <div class="articles">Loading...</div>
+        </section>
+      `;
 
     preparePage();
   };

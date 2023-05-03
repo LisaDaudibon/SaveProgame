@@ -3,6 +3,7 @@
 import './style/index.scss';
 
 import { Routes } from './js/routes';
+import { PageList } from './js/pagelist';
 
 const callRoute = () => {
   const { hash } = window.location;
@@ -22,3 +23,11 @@ const callRoute = () => {
 window.addEventListener('hashchange', () => callRoute());
 window.addEventListener('DOMContentLoaded', () => callRoute());
 
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const searchQuery = searchInput.value;
+  PageList(searchQuery)
+})
