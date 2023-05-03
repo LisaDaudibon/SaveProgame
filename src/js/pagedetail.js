@@ -12,7 +12,7 @@ export const PageDetail = (argument) => {
       articleDOM.querySelector("p.description").innerHTML = description;
     };
 
-    const API_KEY = ""
+    const API_KEY = "1fb43d4e40d4404c9ae1168602d9da7b"
 
     const fetchGame = (url, argument) => {
       fetch(`${url}/${argument}?key=${API_KEY}`)
