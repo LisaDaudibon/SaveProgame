@@ -3,6 +3,12 @@ export const PageList = (argument = '') => {
   const preparePage = () => {
     const cleanedArgument = argument.trim().replace(/\s+/g, '-');
 
+    const platformsHTML = platforms.map(gamePlatform =>
+      `<span class="platform">${gamePlatform.platform.name}</span>`)
+      .join(", ");
+      articleDOM.querySelector("p.platforms span").innerHTML = platformsHTML;
+    };
+
     const displayResults = (articles) => {
       const resultsContent = articles.map((article) => (
         `<article class="cardGame">
@@ -11,7 +17,7 @@ export const PageList = (argument = '') => {
               <div class="card-body">
               <p class=text-center>${article.name}</p>
               <p>Date de sortie : ${article.released}</p>
-              <p>Plateformes : ${article.platforms}</p>
+              <p class="platforms">Disponible sur : <span></span></p>
               <a href="#pagedetail/${article.id}" class="btn btn-info text-center">Plus de détails</a>
               </div>
           </div>
