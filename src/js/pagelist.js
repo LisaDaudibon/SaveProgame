@@ -3,12 +3,6 @@ export const PageList = (argument = '') => {
   const preparePage = () => {
     const cleanedArgument = argument.trim().replace(/\s+/g, '-');
 
-    const platformsHTML = platforms.map(gamePlatform =>
-      `<span class="platform">${gamePlatform.platform.name}</span>`)
-      .join(", ");
-      articleDOM.querySelector("p.platforms span").innerHTML = platformsHTML;
-    };
-
     const displayResults = (articles) => {
       const resultsContent = articles.map((article) => (
         `<article class="cardGame">
@@ -17,13 +11,19 @@ export const PageList = (argument = '') => {
               <div class="card-body">
               <p class=text-center>${article.name}</p>
               <p>Date de sortie : ${article.released}</p>
-              <p class="platforms">Disponible sur : <span></span></p>
+              <p>Plateformes : ${article.platforms}</p>
               <a href="#pagedetail/${article.id}" class="btn btn-info text-center">Plus de détails</a>
               </div>
           </div>
           </div>
         </article>`
       ));
+
+      const platformsHTML = platforms.map(gamePlatform =>
+        `<span class="platform">${gamePlatform.platform.name}</span>`)
+        .join(", ");
+        displayResults.querySelector("p.platforms span").innerHTML = platformsHTML;
+
       const resultsContainer = document.querySelector('.page-list .articles');
       resultsContainer.innerHTML = resultsContent.join("\n");
     };
@@ -37,7 +37,7 @@ export const PageList = (argument = '') => {
         });
     };
 
-    const API_KEY = ""
+    const API_KEY = "1fb43d4e40d4404c9ae1168602d9da7b"
 
     fetchList(`https://api.rawg.io/api/games?key=${API_KEY}`, cleanedArgument);
   };
