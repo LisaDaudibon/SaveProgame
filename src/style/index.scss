@@ -1,0 +1,6 @@
+@import "bootswatch/dist/cyborg/bootstrap.min.css";
+
+.cardGame{
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+}
