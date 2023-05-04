@@ -44,7 +44,7 @@ export const PageList = (argument = "", searchType = "search") => {
         </div>`;
     };
 
-    const API_KEY = "1fb43d4e40d4404c9ae1168602d9da7b"
+    const API_KEY = ""
 
     const fetchList = (url, argument, searchType) => {
       const finalURL = argument ? `${url}&${searchType}=${argument}` : url;
